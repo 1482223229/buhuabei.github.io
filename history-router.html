@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>history-router</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body, #root {
+            width: 100%;
+            height: 100%;
+        }
+        #root {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+        header {
+            line-height: 50px;
+            border-bottom: 1px solid #eee;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-around;
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <header>history路由</header>
+        <div class="nav-bar">
+            <div href="/home">首页</div>
+            <div href="/page1">页面一</div>
+            <div href="/page2">页面二</div>
+        </div>
+        <h1 class="router-view">
+
+        </h1>
+    </div>
+</body>
+<script>
+    const routerView = document.querySelector('.router-view');
+    const navBar = document.querySelector('.nav-bar');
+    window.onload = function() {
+         class HistoryRouter {
+             constructor() {
+                 // 保存对应键和函数
+                 this.routes = {};
+                 // 监听popstate事件
+                 window.addEventListener('popstate', () => {
+                    const path = window.location.pathname;
+                    this.routes[path] && this.routes[path]();
+                 })
+             }
+             registerRoute(path, callback) {
+                 this.routes[path] = callback || function () {};
+             }
+             init() {
+                const path = window.location.pathname;
+                history.replaceState(null, null, path);
+                this.routes[path] && this.routes[path]();
+             }
+             go(path) {
+                window.history.pushState(null, null, path)
+             }
+         }
+         const route = new HistoryRouter();
+         route.init();
+         route.registerRoute('/home', function() {
+            routerView.innerHTML = '首页'
+         })
+         route.registerRoute('/page1', function() {
+            routerView.innerHTML = '页面1'
+         })
+         route.registerRoute('/page2', function() {
+            routerView.innerHTML = '页面2'
+         })
+         
+         navBar.onclick = function(ev) {
+            var href = ev.target.getAttribute('href')
+            if(href) {
+                route.go(href)
+            }
+         }
+    }
+    
+</script>
+</html>
