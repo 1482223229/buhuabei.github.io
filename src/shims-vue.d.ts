@@ -4,3 +4,13 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare module "@kangc/v-md-editor/lib/codemirror-editor";
+declare module "@kangc/v-md-editor/lib/theme/github.js";
+declare module '@kangc/v-md-editor/lib/preview';
+declare module 'codemirror';
+declare module "@/views/datascreen/switchFn";
+declare module "*.json";
+declare module 'magnifier-hb';
+declare module 'pagination-hb';
+declare module "@/views/entertainmentmedia/jsondata.js";
