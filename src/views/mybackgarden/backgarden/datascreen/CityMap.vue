@@ -1,21 +1,10 @@
 <template>
-  <div
-    id="map"
-    v-if="propsData.name.includes('中国')"
-    style="width: 100%; height: 150%"
-  ></div>
+  <div id="map" v-if="propsData.name.includes('中国')" style="width: 100%; height: 150%"></div>
   <div id="map" v-else style="width: 100%; height: 100%"></div>
 </template>
 
 <script>
-import {
-  defineComponent,
-  onMounted,
-  getCurrentInstance,
-  watch,
-  reactive,
-  toRefs,
-} from "vue";
+import { defineComponent, onMounted, getCurrentInstance, watch, reactive, toRefs } from "vue";
 
 export default defineComponent({
   inject: {
@@ -26,7 +15,7 @@ export default defineComponent({
   components: {},
   props: ["propsData"],
   setup(props) {
-    const { ctx } = getCurrentInstance();
+    const { proxy } = getCurrentInstance();
     const state = reactive({
       propsDt: {},
     });
@@ -93,24 +82,24 @@ export default defineComponent({
         ],
       };
 
-      ctx.echarts.registerMap("cs", ctx.propsData.responseData);
-      var chart = ctx.echarts.init(document.getElementById("map"));
+      proxy.echarts.registerMap("cs", proxy.propsData.responseData);
+      const chart = proxy.echarts.init(document.getElementById("map"));
       chart.setOption(option);
       chart.resize();
       chart.on("click", function (params) {
-        ctx.$emit("handelClickMap", params);
+        proxy.$emit("handelClickMap", params);
       });
     };
 
     const forMatterListData = () => {
-      return ctx.propsData.seriesData.map((item) => {
+      return proxy.propsData.seriesData.map((item) => {
         item.value = item.mapValue;
         return item;
       });
     };
 
     onMounted(() => {
-      ctx.$nextTick(() => {
+      proxy?.$nextTick(() => {
         initMap();
       });
       window.addEventListener("resize", () => {
@@ -123,7 +112,7 @@ export default defineComponent({
     watch(
       () => props.propsData,
       () => {
-        ctx.$nextTick(() => {
+        proxy.$nextTick(() => {
           initMap();
         });
       }

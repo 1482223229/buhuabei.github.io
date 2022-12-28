@@ -14,7 +14,7 @@ export default defineComponent({
   components: {},
   props: ["propsData"],
   setup(props) {
-    const { ctx } = getCurrentInstance();
+    const { proxy } = getCurrentInstance();
     const initMap = () => {
       let option = {
         xAxis: {
@@ -31,7 +31,7 @@ export default defineComponent({
             rotate: -30,
             fontSize: 15,
           },
-          data: ctx.propsData.seriesData.map((item) => {
+          data: proxy.propsData.seriesData.map((item) => {
             return item.name;
           }),
         },
@@ -63,7 +63,7 @@ export default defineComponent({
                 return `${params.value}万`;
               },
             },
-            data: ctx.propsData.seriesData.map((item) => {
+            data: proxy.propsData.seriesData.map((item) => {
               return {
                 value: item.mapValue,
               };
@@ -85,7 +85,7 @@ export default defineComponent({
                 return `${params.value}亿`;
               },
             },
-            data: ctx.propsData.seriesData.map((item) => {
+            data: proxy.propsData.seriesData.map((item) => {
               return {
                 value: item.gdpValue,
                 itemStyle: {
@@ -96,12 +96,12 @@ export default defineComponent({
           },
         ],
       };
-      var chart = ctx.echarts.init(document.getElementById("population"));
+      const chart = proxy.echarts.init(document.getElementById("population"));
       chart.setOption(option);
       chart.resize();
     };
     onMounted(() => {
-      ctx.$nextTick(() => {
+      proxy?.$nextTick(() => {
         initMap();
       });
       window.addEventListener("resize", () => {
