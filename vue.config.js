@@ -2,7 +2,7 @@ const path = require("path");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 
 module.exports = {
-  publicPath: "/",
+  publicPath: "/io",
   pluginOptions: {
     "style-resources-loader": {
       preProcessor: "less",
