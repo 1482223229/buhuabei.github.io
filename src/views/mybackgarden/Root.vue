@@ -1,31 +1,35 @@
 <template>
   <div class="root-view">
-    <header class="homebanner"></header>
-    <nav id="nav">
-      <router-link to="/home">主页</router-link> |
-      <router-link to="/backgarden">后花园</router-link>
-    </nav>
-    <div class="router-view">
-      <PageHeader v-if="route.path && !route.path.includes('/home')" :title="pageTitle" @back="onBack" />
-      <router-view />
+    <EmpireCode />
+    <div class="container">
+      <nav id="nav">
+        <router-link to="/home">主页</router-link> |
+        <router-link to="/backgarden">后花园</router-link>
+      </nav>
+
+      <div class="router-view">
+        <PageHeader v-if="route.path && !route.path.includes('/home')" :title="pageTitle" @back="onBack" />
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { reactive, toRefs, watch } from "vue";
 import { PageHeader } from "ant-design-vue";
 import { useRoute, useRouter } from "vue-router";
-
+import EmpireCode from "@/components/EmpireCode.vue";
 export default {
   components: {
     PageHeader,
+    EmpireCode,
   },
   setup() {
     const state = reactive({
       route: useRoute(),
       router: useRouter(),
-      pageTitle: "",
+      pageTitle: {},
     });
     state.pageTitle = state.route.meta.title || "huabei-wz";
     const onBack = () => {
@@ -50,13 +54,16 @@ export default {
 .root-view {
   width: 100%;
   height: 100%;
-  .homebanner {
-    width: 100%;
-    height: 30%;
-    background: url("../../assets/homebanner.jpg");
-    background-position: 50%;
-    background-size: cover;
-    min-height: 200px;
+  padding: 0 200px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: 150px;
+  .container {
+    flex: 1;
+    background: white;
+    overflow: hidden;
+    overflow-y: scroll;
   }
   #nav {
     padding: 30px;

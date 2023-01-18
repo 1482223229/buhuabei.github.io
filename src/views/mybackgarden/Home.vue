@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Sakura />
     <div class="item-container left-container">
       <div class="head-ct">
         <img :src="require('../../assets/head_img.png')" />
@@ -35,14 +36,14 @@
       ></iframe>
     </div> -->
   </div>
-  <footer class="footer">你好！我好！大家好！才是真的好！（纯属个人爱好，该网站非商业用途）</footer>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue";
+import Sakura from "@/components/Sacura.vue";
 
 export default defineComponent({
-  components: {},
+  components: { Sakura },
   setup() {
     const state = reactive({
       count: 1 as number,
@@ -61,7 +62,7 @@ export default defineComponent({
   flex-wrap: wrap;
   background: #f9f9f9;
   padding: 50px 0;
-  margin-bottom: 50px;
+  margin: 50px;
   .item-container {
     flex: 1;
   }
@@ -105,16 +106,5 @@ export default defineComponent({
     line-height: 70px;
     font-size: 20px;
   }
-}
-.footer {
-  width: 100%;
-  margin-top: 50px;
-  text-align: center;
-  line-height: 50px;
-  background: #f5f5f5;
-  color: #999;
-  position: fixed;
-  bottom: 0;
-  left: 0;
 }
 </style>
