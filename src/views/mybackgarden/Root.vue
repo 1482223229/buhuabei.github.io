@@ -20,13 +20,19 @@ import { reactive, toRefs, watch } from "vue";
 import { PageHeader } from "ant-design-vue";
 import { useRoute, useRouter } from "vue-router";
 import EmpireCode from "@/components/EmpireCode.vue";
+
+interface IState {
+  route: any;
+  router: any;
+  pageTitle: any;
+}
 export default {
   components: {
     PageHeader,
     EmpireCode,
   },
   setup() {
-    const state = reactive({
+    const state: IState = reactive({
       route: useRoute(),
       router: useRouter(),
       pageTitle: {},
