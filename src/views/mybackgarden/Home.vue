@@ -20,7 +20,7 @@
       </div>
       <div class="slide-ct">
         <label>爱好：</label>
-        <span class="span">听音乐、看视频、旅行、敲代码（也喜欢，但喜欢的并不多）</span>
+        <span class="span">听音乐、刷剧、旅行、敲代码</span>
       </div>
       <div class="slide-ct">
         <label>Motto：</label>

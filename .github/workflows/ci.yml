@@ -12,6 +12,12 @@ jobs:
       - name: Checkout  ️ # 将代码拉取到虚拟机
         uses: actions/checkout@v3
 
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          # this will use the latest Node 12 version
+          node-version: 16.x
+
       - name: Install and Build   # 安装依赖、打包，如果提前已打包好无需这一步
         run: |
           npm install

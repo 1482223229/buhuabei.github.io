@@ -4,11 +4,15 @@
     <div class="container">
       <nav id="nav">
         <router-link to="/home">主页</router-link> |
-        <router-link to="/backgarden">后花园</router-link>
+        <router-link to="/backgarden">
+          <span :class="pageTitle !== '主页' ? 'active-nav' : ''">{{
+            pageTitle === "主页" ? "后花园" : pageTitle
+          }}</span>
+        </router-link>
       </nav>
 
       <div class="router-view">
-        <PageHeader v-if="route.path && !route.path.includes('/home')" :title="pageTitle" @back="onBack" />
+        <!-- <PageHeader v-if="route.path && !route.path.includes('/home')" :title="pageTitle" @back="onBack" /> -->
         <router-view />
       </div>
     </div>
@@ -17,7 +21,7 @@
 
 <script lang="ts">
 import { reactive, toRefs, watch } from "vue";
-import { PageHeader } from "ant-design-vue";
+// import { PageHeader } from "ant-design-vue";
 import { useRoute, useRouter } from "vue-router";
 import EmpireCode from "@/components/EmpireCode.vue";
 
@@ -28,16 +32,16 @@ interface IState {
 }
 export default {
   components: {
-    PageHeader,
+    // PageHeader,
     EmpireCode,
   },
   setup() {
     const state: IState = reactive({
       route: useRoute(),
       router: useRouter(),
-      pageTitle: {},
+      pageTitle: "后花园",
     });
-    state.pageTitle = state.route.meta.title || "huabei-wz";
+    state.pageTitle = state.route.meta.title || "后花园";
     const onBack = () => {
       state.router.go(-1);
     };
@@ -45,7 +49,7 @@ export default {
     watch(
       () => state.route.meta,
       (value) => {
-        state.pageTitle = value.title || "huabei-wz";
+        state.pageTitle = value.title || "后花园";
       }
     );
     return {
@@ -65,12 +69,23 @@ export default {
   display: flex;
   flex-direction: column;
   padding-top: 150px;
+
   .container {
+    margin-bottom: 20px;
+    position: relative;
     flex: 1;
     background: white;
+    display: flex;
     overflow: hidden;
-    overflow-y: scroll;
+    flex-direction: column;
+    border-radius: 30px;
+    .router-view {
+      flex: 1;
+      overflow: hidden;
+      overflow-y: scroll;
+    }
   }
+
   #nav {
     padding: 30px;
     text-align: center;
@@ -78,6 +93,9 @@ export default {
     a {
       color: @themeColor;
     }
+  }
+  .active-nav {
+    color: @activedColor;
   }
 
   #nav a.router-link-exact-active {

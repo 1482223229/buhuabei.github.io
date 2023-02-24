@@ -3,10 +3,9 @@
     <div class="content">
       <h3>JavaScript 与 TypeScript 的区别</h3>
       <div class="wrapper">
-        TypeScript 是 JavaScript 的超集，扩展了 JavaScript 的语法，因此现有的
-        JavaScript 代码可与 TypeScript 一起工作无需任何修改，TypeScript
-        通过类型注解提供编译时的静态类型检查。 TypeScript 可处理已有的
-        JavaScript 代码，并只对其中的 TypeScript 代码进行编译。
+        TypeScript 是 JavaScript 的超集，扩展了 JavaScript 的语法，因此现有的 JavaScript 代码可与 TypeScript
+        一起工作无需任何修改，TypeScript 通过类型注解提供编译时的静态类型检查。 TypeScript 可处理已有的 JavaScript
+        代码，并只对其中的 TypeScript 代码进行编译。
       </div>
       <h3>要求数据类型是数值</h3>
       <div class="wrapper">
@@ -18,31 +17,19 @@
       <h3>要求数据类型是字符串</h3>
       <div class="wrapper">
         <span>20&nbsp;&nbsp;</span>
-        <span
-          >+&nbsp;&nbsp;{{
-            valueState.typeIsString.typeValue
-          }}&nbsp;&nbsp;=&nbsp;&nbsp;</span
-        >
+        <span>+&nbsp;&nbsp;{{ valueState.typeIsString.typeValue }}&nbsp;&nbsp;=&nbsp;&nbsp;</span>
         <span>{{ valueState.typeIsString.resultValue }}</span>
       </div>
       <v-md-preview :text="textHightLight.typeIsString"></v-md-preview>
       <h3>数据类型是any</h3>
       <div class="wrapper">
         <span>20&nbsp;&nbsp;</span>
-        <span
-          >+&nbsp;&nbsp;{{
-            valueState.typeIsAny.typeValue1
-          }}&nbsp;&nbsp;=&nbsp;&nbsp;</span
-        >
+        <span>+&nbsp;&nbsp;{{ valueState.typeIsAny.typeValue1 }}&nbsp;&nbsp;=&nbsp;&nbsp;</span>
         <span>{{ valueState.typeIsAny.resultValue1 }}</span>
       </div>
       <div class="wrapper">
         <span>20&nbsp;&nbsp;</span>
-        <span
-          >+&nbsp;&nbsp;{{
-            valueState.typeIsAny.typeValue2
-          }}&nbsp;&nbsp;=&nbsp;&nbsp;</span
-        >
+        <span>+&nbsp;&nbsp;{{ valueState.typeIsAny.typeValue2 }}&nbsp;&nbsp;=&nbsp;&nbsp;</span>
         <span>{{ valueState.typeIsAny.resultValue2 }}</span>
       </div>
       <v-md-preview :text="textHightLight.typeIsAny"></v-md-preview>
@@ -77,14 +64,10 @@
           <strong>public :公有 在当前类里面、 子类 、类外面都可以访问</strong>
         </p>
         <p>
-          <strong>
-            protected：保护类型 在当前类里面、子类里面可以访问，在类外部没法访问
-          </strong>
+          <strong> protected：保护类型 在当前类里面、子类里面可以访问，在类外部没法访问 </strong>
         </p>
         <p>
-          <strong>
-            private ：私有 在当前类里面可以访问，子类、类外部都没法访问
-          </strong>
+          <strong> private ：私有 在当前类里面可以访问，子类、类外部都没法访问 </strong>
         </p>
         <p>
           <strong>属性如果不加修饰符 默认就是 公有 （public）</strong>
@@ -96,7 +79,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+import { defineComponent, reactive, toRefs, onMounted } from "vue";
 
 interface myMsgInterFace {
   name: string;
@@ -112,18 +95,18 @@ export default defineComponent({
           resultValue: 0,
         },
         typeIsString: {
-          typeValue: '21',
-          resultValue: '',
+          typeValue: "21",
+          resultValue: "",
         },
         typeIsAny: {
-          typeValue1: 'undefined',
-          typeValue2: 'null',
-          resultValue1: '',
-          resultValue2: '',
+          typeValue1: "undefined",
+          typeValue2: "null",
+          resultValue1: "",
+          resultValue2: "",
         },
         typeIsInterFace: {
-          name: '',
-          sex: '',
+          name: "",
+          sex: "",
         },
         typeIsAs: {
           numberValueLength: 0,
@@ -136,7 +119,7 @@ export default defineComponent({
       state.valueState.typeIsNumber.resultValue = 50 + value;
     };
     const computerTypeIsString = (value: string) => {
-      state.valueState.typeIsString.resultValue = '20' + value;
+      state.valueState.typeIsString.resultValue = "20" + value;
     };
     const computerTypeIsAny = (value: any) => {
       if (value === undefined) {
@@ -158,13 +141,13 @@ export default defineComponent({
     onMounted(() => {
       let userName: string;
       let numberValue: number;
-      userName = 'huabei bu';
+      userName = "huabei bu";
       numberValue = 1234567890;
       computerTypeIsNumber(state.valueState.typeIsNumber.typeValue);
       computerTypeIsString(state.valueState.typeIsString.typeValue);
       computerTypeIsAny(undefined);
       computerTypeIsAny(null);
-      computerTypeIsInterFace({ name: userName, sex: '男' });
+      computerTypeIsInterFace({ name: userName, sex: "男" });
       computerTypeIsAs(userName);
       computerTypeIsAs(numberValue);
     });
@@ -176,12 +159,12 @@ export default defineComponent({
       computerTypeIsAs,
       textHightLight: {
         typeIsNumber:
-          '```js\n\
+          "```js\n\
           const computerTypeIsNumber = (value : number) => { \n\
               state.valueState.typeIsNumber.resultValue = 50 + value; \n\
           };\n\
           computerTypeIsString(100) \n\
-        ',
+        ",
         typeIsString:
           "```js\n\
           const computerTypeIsString = (value: string) => {\n\

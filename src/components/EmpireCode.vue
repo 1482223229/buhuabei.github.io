@@ -3,16 +3,20 @@
   <div class="code_toxic_img"></div>
 </template>
 <script>
+let timer = null;
 export default {
   data() {
     return {};
   },
-  methods: {},
-  mounted() {
-    window.onload = function () {
-      var canvas = document.getElementById("canvas_empirecode");
+  methods: {
+    renderCanvas() {
+      // window.onload = function () {
+      if (timer) {
+        clearInterval(timer);
+      }
+      var canvas = null;
+      canvas = document.getElementById("canvas_empirecode");
       // getContext() 方法返回一个用于在画布上绘图的环境。
-      console.log(canvas);
       var context = canvas.getContext("2d");
       var W = window.innerWidth;
       var H = window.innerHeight;
@@ -49,7 +53,18 @@ export default {
       }
 
       draw();
-      setInterval(draw, 33);
+      timer = setInterval(draw, 33);
+      // };
+    },
+  },
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const that = this;
+    that.renderCanvas();
+    window.onresize = function () {
+      setTimeout(() => {
+        that.renderCanvas();
+      }, 1000);
     };
   },
 };
@@ -60,7 +75,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: 0;
 }
 .bg {
   width: 100%;
