@@ -89,7 +89,7 @@ export default {
   position: fixed;
   left: 0;
   top: 0;
-  background-image: url("~@/assets/code_toxic.gif");
+  background-image: url("~@/assets/code_toxic1.gif");
   background-position: -40%;
   background-size: cover;
   background-repeat: no-repeat;

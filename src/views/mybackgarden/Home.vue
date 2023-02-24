@@ -3,7 +3,7 @@
     <Sakura />
     <div class="item-container left-container">
       <div class="head-ct">
-        <img :src="require('../../assets/head_img.png')" />
+        <img :src="require('../../assets/head_img.jpeg')" />
       </div>
       <div class="slide-ct">
         <span class="span">踏步青云(北北)</span>
