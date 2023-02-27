@@ -64,7 +64,7 @@ export default {
 .root-view {
   width: 100%;
   height: 100%;
-  padding: 0 200px;
+  padding: 0 150px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -74,7 +74,7 @@ export default {
     margin-bottom: 20px;
     position: relative;
     flex: 1;
-    background: white;
+    background: #ffe5e5;
     display: flex;
     overflow: hidden;
     flex-direction: column;
@@ -83,6 +83,7 @@ export default {
       flex: 1;
       overflow: hidden;
       overflow-y: scroll;
+      padding: 0 20px;
     }
   }
 

@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="page-container">
     <Card :bordered="false">
       <div class="gutter-example">
         <Row :gutter="[16, { xs: 8, sm: 16, md: 24, lg: 32 }]">
           <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" class="gutter-row" v-for="(item, k) in linkCards" :key="k">
-            <CardGrid @click="handleLinkCard(item)">
+            <CardGrid @click="handleLinkCard(item)" class="hover-cursor">
               <div class="item-cts">
                 <div><i :class="`iconfont ${item.icon}`"></i></div>
                 <div class="text">{{ item.text }}</div>
@@ -79,7 +79,7 @@ export default {
         {
           icon: "icon-luyou",
           text: "XSwitch（请求地址转发）",
-          path: "/pagination-vue",
+          path: "/xswitch",
         },
         {
           icon: "icon-luyou",
@@ -114,6 +114,12 @@ export default {
 </script>
 
 <style scoped lang="less">
+.page-container {
+  padding: 50px;
+}
+.hover-cursor:hover {
+  cursor: pointer;
+}
 .item-cts {
   .iconfont {
     font-size: 20px;

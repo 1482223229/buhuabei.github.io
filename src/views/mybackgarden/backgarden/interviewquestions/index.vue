@@ -1,7 +1,8 @@
 <template>
-  <div class="page-container">
+  <div class="page-container" id="interview-questions-scroll-view">
     <div class="content">
-      <h3>HTTP/HTTPS协议</h3>
+      <Anchor :propsSelectedAnchorId="selectedAnchorId" />
+      <h3 id="anchor1" class="anchorele anchor1">HTTP/HTTPS协议</h3>
       <div class="wrapper">
         <p class="level2-title">1.HTTP</p>
         <div class="wrapper-content">
@@ -38,7 +39,7 @@
       </div>
     </div>
     <div class="content">
-      <h3>vue和react相同点、不同点</h3>
+      <h3 id="anchor2" class="anchorele anchor2">vue和react相同点、不同点</h3>
       <div class="wrapper">
         <p class="level2-title">一、相同点</p>
         <div class="wrapper-content">
@@ -66,7 +67,7 @@
       </div>
     </div>
     <div class="content">
-      <h3>js设计模式</h3>
+      <h3 id="anchor3" class="anchorele anchor3">js设计模式</h3>
       <div class="wrapper">
         <p class="level2-title">1.单例模式</p>
         <p class="level2-title">2.策略模式</p>
@@ -142,7 +143,7 @@
       </div>
     </div>
     <div class="content">
-      <h3>在浏览器输入url敲击回车后发生了什么</h3>
+      <h3 id="anchor4" class="anchorele anchor4">在浏览器输入url敲击回车后发生了什么</h3>
       <div class="wrapper">
         <p class="level2-title">概述</p>
         在浏览器输入URL回车之后，主要发生以下六个行为：
@@ -154,41 +155,266 @@
         <div>5、响应请求</div>
         <div>6、页面渲染</div>
 
-        <a>详细链接：https://www.jianshu.com/p/a0dbffd9bd43</a>
+        <p>
+          详细链接：<a href="https://www.jianshu.com/p/a0dbffd9bd43" target="_blank"
+            >https://www.jianshu.com/p/a0dbffd9bd43</a
+          >
+        </p>
       </div>
     </div>
     <div class="content">
-      <h3>vue常用的属性及API的了解</h3>
-      <div class="wrapper">答案...</div>
+      <h3 id="anchor5" class="anchorele anchor5">vue数据双向绑定原理</h3>
+      <div class="wrapper">
+        <p class="level2-title">一、原理分析</p>
+        <ul>
+          <li>1. new Vue() 首先执行初始化，对data执行响应化处理，这个过程发生在Observer中</li>
+          <li>2. 同时对模板执行编译，找到其中动态绑定的数据，从data中获取并初始化视图，这个过程发生在Compile中</li>
+          <li>3. 同时定义一个更新函数和Watcher，将来对应数据变化时Watcher会调用更新函数</li>
+          <li>4. 由于data的某个key在一个视图中可能出现多次，所以每个key都需要一个管家Dep来管理多个Watcher</li>
+          <li>5. 将来data中数据一旦发生变化，会首先找到对应的Dep，通知所有Watcher执行更新函数</li>
+        </ul>
+        <p class="level2-title">二、实现思路</p>
+        <ul>
+          <li>1. 监听数据变化（数据劫持/数据代理）[Object.defineProperty]</li>
+          <li>2. 收集视图依赖了哪些数据 （依赖收集）</li>
+          <li>3. 数据变化时，自动“通知”视图需要修改哪些部分，并进行更新 （发布订阅模式）</li>
+        </ul>
+        <p class="level2-title">三、实现简单的双向绑定</p>
+
+        <v-md-preview
+          text="```js
+          <input type='text' id='input' />
+          <p id='data'></p>
+          <script>
+              const obj = {};
+              const input = document.getElementById('input');
+              // 数据劫持，实现数据->视图的绑定
+              Object.defineProperty(obj, 'name', {
+                  configurable: true,
+                  enumerable: true,
+                  get() {
+                      return input.value;
+                  },
+                  set(newVal) {
+                      input.value = newVal;
+                      document.getElementById('data').innerHTML = newVal;
+                  }
+               });
+              // 监听输入框，实现视图->数据的绑定
+              input.addEventListener('keyup', () => {
+                  obj.name = input.value;
+              })
+          </script>
+          "
+        ></v-md-preview>
+      </div>
+    </div>
+
+    <div class="content">
+      <h3 id="anchor6" class="anchorele anchor6">（vue/react）组件传值</h3>
+      <div class="wrapper">
+        <p class="level2-title">一、vue组件传值</p>
+        <p>1、父组件传给子组件</p>
+        <v-md-preview
+          text="```js
+           // Children.vue
+           props:['msg'],
+           data() {
+               return {
+                   myMsg:this.msg
+               }
+           }
+
+           // Parent.vue
+           <Children :msg='message'></Children>
+          "
+        ></v-md-preview>
+        <p>2、子组件传给父组件</p>
+        <p>// 在子组件中使用this.$emit(‘myEvent’) 触发，然后在父组件中使用@myEvent监听</p>
+        <v-md-preview
+          text="```js
+         // Children.vue
+         // 通过自定义事件addNum把值传给父组件
+         this.$emit('addNum',this.childNum++)
+
+         // Parent.vue
+         <Children-Com @addNum='getNum'></Children-Com>
+         methods:{
+            // childNum是由子组件传入的
+            getNum(childNum){
+                this.parentNum = childNum
+            }
+          }
+        "
+        ></v-md-preview>
+        <p>3、兄弟组价间传值</p>
+        <div>
+          <p>1.子组建A通过$emit监听自定义事件，向父组件传值，然后父组件再通过props将值传递给子组件</p>
+          <p>2.总线传值 $emit + $on</p>
+        </div>
+        <p>4、使用$ref传值</p>
+        <div>通过$ref的能力，给子组件定义一个ID，父组件通过这个ID可以直接访问子组件里面的方法和属性</div>
+        <p>5、使用依赖注入传给后代子孙曾孙</p>
+        <p>假设父组件有一个方法 getName()，需要把它提供给所有的后代</p>
+        <v-md-preview
+          text="```js
+          // provide 选项允许我们指定我们想要提供给后代组件的数据&方法
+
+          provide: function () {
+            return {
+              getName: this.getName()
+            }
+          }
+
+          // 然后在任何后代组件里，我们都可以使用 inject 来给当前实例注入父组件的数据/方法：
+
+          inject: ['getName']
+        "
+        ></v-md-preview>
+        <p class="level2-title">二、react组件传值</p>
+        <p><strong>组件传值的分类</strong></p>
+        <ul>
+          <li>1. 按嵌套关系分：父子传值和兄弟传值(意思是指跨组件传值)</li>
+          <li>2. 按传值方法分：props，ref，context，redux</li>
+        </ul>
+        <ul class="ul-disc">
+          <li><strong>1、 父组件向子组件传值</strong></li>
+          <div>父组件向子组件传值 也是通过 props 来传，在子组件中用 this.props.xx 接收父组件传来的值</div>
+          <li><strong>2. 子组件向父组件传值</strong></li>
+          <div>通过 事件传递 + callback 实现</div>
+          <li><strong>3. 子组件向子组件传值（包括兄弟组件）</strong></li>
+          <div>
+            通过总线bus 、 bus.emit(‘xx’,{data})、 bus.on(‘xx’,data=>{}) 来传值；传值的组件用
+            bus.emit(‘xx’,{data})传值，接收值的组件用 bus.on(‘xx’,data=>{}) 来接收传来的值
+          </div>
+          <li><strong>4. 通过context上下文传值</strong></li>
+        </ul>
+      </div>
     </div>
     <div class="content">
-      <h3>vue数据双向绑定</h3>
-      <div class="wrapper">答案...</div>
+      <h3 id="anchor7" class="anchorele anchor7">nodejs的了解</h3>
+      <div class="wrapper">
+        nodejs是一个基于ChromeV8引擎的JavaScript运行环境，一个让JavaScript运行在服务端的开发平台，让脚本语言JavaScript能作为服务器语言。
+        <p>node的优点：超强的高并发能力、使用JavaScript语法等。</p>
+        <ul class="ul-disc">
+          <li>http用来处理请求响应的模块</li>
+          <li>fs 用来读取文件的模块</li>
+          <li>url 用来解析请求数据等等</li>
+          <li>Node.js还集成了 Npm 包管理工具，让我们可以很方便的通过命令行就能下载我们项目依赖的包</li>
+          <li>让前端工程模块化，开发迅速，降低代码耦合度，可维护性大大增强。</li>
+        </ul>
+      </div>
     </div>
     <div class="content">
-      <h3>react hooks的了解</h3>
-      <div class="wrapper">答案...</div>
+      <h3 id="anchor8" class="anchorele anchor8">es6的了解</h3>
+      <div class="wrapper">
+        <ul class="ul-disc">
+          <li>1. var、let、const各自的特点及其区别</li>
+          <br />
+          <pre>
+    在ES6之前只有全局作用域和局部作用域，ES6新增了块级作用域let和const,下面将简单介绍var、let和const的特点以及区别。
+    块级作用域：只能在声明的区域（代码块）中使用，不能在声明的区域的外部使用，否则报（xxx is not defined）。
+    var：使用var声明的变量，其作用域为该变量所在的函数内，且存在变量提升现象（变量提升：可以先使用再声明），不会受到块级作用域的影响
+    let：ES6新增的块级作用域
+    1：使用let声明的变量具有块级作用域:，只能在当前声明的代码块中使用，必须要先声明再使用
+    2：具有暂时性死区特性。 const：ES6中新增的常量（常量：值（内存地址）不可更改的量）。特点如下：
+
+    3.1：具有块级作用域的特点，只能在当前声明的代码块中使用，必须要先声明再使用。
+    3.2：声明常量时必须赋值，如果不赋值报错：Missing initializer in const declaration（在const声明中未初始化）。
+    3.3：const声明的常量不可更改。
+    3.4：使用const声明的常量如果是基本数据类型（比如：数字、字符串），一旦赋值，值不可以更改；
+    如果是引用数据类型（数组，对象），不能重新赋值，但是可以更改数据结构内部的值（比如修改对象中的属性）
+          </pre>
+          <li>2. 箭头函数</li>
+          <br />
+          <div>
+            <p>2.1、 箭头函数相当于匿名函数，并且简化了函数定义</p>
+            <p>2.2、 箭头函数没有原型prototype，因此箭头函数没有this指向</p>
+            <p>
+              2.3、
+              箭头函数没有自己的this指向，它会捕获自己定义所处的外层执行环境，并且继承这个this值。箭头函数的this指向在被定义的时候就确定了，之后永远都不会改变。
+            </p>
+          </div>
+        </ul>
+      </div>
     </div>
     <div class="content">
-      <h3>（vue/react）组件传值</h3>
-      <div class="wrapper">答案...</div>
+      <h3 id="anchor9" class="anchorele anchor9">原型&原型链</h3>
+      <div class="wrapper">
+        <p>
+          原型：每一个对象都有一个prototype属性可以挂载要扩展的属性和方法，在prototype上挂载的属性和方法在这个对象的任何实例上都可以调用。
+        </p>
+        <p>
+          当一个对象调用自身不存在的属性/方法时，就会去prototype关联的父类对象上去找，如果找不到继续去父类关联的对象上去找，直到找到Object的属性和方法，找到直到调用，找不到返回undefined
+        </p>
+      </div>
     </div>
     <div class="content">
-      <h3>es6的了解</h3>
-      <div class="wrapper">答案...</div>
-    </div>
-    <div class="content">
-      <h3>原型/原型链</h3>
-      <div class="wrapper">答案...</div>
+      <h3 id="anchor10" class="anchorele anchor10">什么是虚拟 DOM</h3>
+      <div class="wrapper">
+        <p>一、 起源</p>
+        <div>虚拟dom最先是由facebook团队提出的，最先运用在react中，之后在vue2.0版本中引入了虚拟DOM的概念</div>
+        <p>二、 虚拟 DOM 实现原理</p>
+        <ul>
+          <li>
+            1. 用 JavaScript 对象结构表示 DOM 树的结构，比如说：一个元素对象，包含TagName、props 和
+            Children这些属性。然后根据这个对象构建一个真正的 DOM 节点， 插到文档当中；
+          </li>
+          <li>2. 当数据状态变更的时候，重新构造一棵新的对象树。通过diff 算法，比较新旧虚拟 DOM 树的差异。</li>
+          <li>3. 根据差异，对真正的 DOM 树进行增、删、改。</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { nextTick, ref } from "vue";
+import Anchor from "./components/Anchor.vue";
+
+const selectedAnchorId = ref("anchor1");
+
+nextTick(() => {
+  const scrollView = document.querySelector("#interview-questions-scroll-view");
+  const anchorEle = document.getElementsByClassName("anchorele");
+  let timer = null;
+  scrollView.addEventListener("scroll", function (ev) {
+    const scrollTop = ev.target.scrollTop;
+    if (timer != null) {
+      console.log("节流中");
+      // 一直清除定时器
+      clearTimeout(timer);
+    }
+    // 只有最后一次定时器有效执行
+    timer = setTimeout(function () {
+      anchorEle.forEach((item) => {
+        const selectItemOffsetTop = item.offsetTop;
+        if (scrollTop - selectItemOffsetTop > -251) {
+          const selectedClassName = item.className.split(" ")[1];
+          selectedAnchorId.value = selectedClassName;
+        }
+      });
+    }, 500);
+  });
+  //节流函数
+});
+</script>
 
 <style lang="less" scoped>
+h3 {
+  color: red;
+}
+ul {
+  list-style-type: none;
+}
+.ul-disc {
+  list-style-type: disc;
+}
 .page-container {
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
   padding: 30px;
   .content {
     .wrapper {

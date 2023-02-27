@@ -61,6 +61,13 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/xswitch",
+        component: () => import("@/views/mybackgarden/backgarden/xswitch/index.vue"),
+        meta: {
+          title: "XSwitch",
+        },
+      },
+      {
         path: "/interview-question",
         component: () => import("@/views/mybackgarden/backgarden/interviewquestions/index.vue"),
         meta: {
