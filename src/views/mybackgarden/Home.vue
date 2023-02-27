@@ -11,6 +11,10 @@
     </div>
     <div class="item-container right-container">
       <div class="slide-ct">
+        <label><i :class="`iconfont icon-dingwei`"></i>：</label>
+        <span class="span">浙江 杭州</span>
+      </div>
+      <div class="slide-ct">
         <label>Age：</label>
         <span class="span">95后</span>
       </div>
@@ -23,8 +27,24 @@
         <span class="span">听音乐、刷剧、旅行、敲代码</span>
       </div>
       <div class="slide-ct">
+        <label>简书首页：</label>
+        <span class="span">
+          <a href="https://www.jianshu.com/u/c56332222810" target="_blank" rel="noopener noreferrer">
+            https://www.jianshu.com/u/c56332222810
+          </a>
+        </span>
+      </div>
+      <div class="slide-ct">
         <label>Motto：</label>
         <span class="span">明天的太阳依旧升起，然岂能允许坐以待毙！</span>
+      </div>
+      <div style="line-height: 30px">
+        <label>网站源码地址：</label>
+        <span class="span">
+          <a href="https://github.com/buhuabei229/buhuabei229.github.io" target="_blank" rel="noopener noreferrer"
+            >https://github.com/buhuabei229/buhuabei229.github.io
+          </a>
+        </span>
       </div>
     </div>
     <!-- <div class="item-container left-container">
@@ -63,8 +83,12 @@ export default defineComponent({
   background: #f9f9f9;
   padding: 50px 0;
   margin: 50px;
+  margin-top: 0px;
   .item-container {
     flex: 1;
+  }
+  .iconfont {
+    font-size: 20px;
   }
   .left-container {
     display: flex;
@@ -103,7 +127,7 @@ export default defineComponent({
     text-align: left;
     overflow: hidden;
     flex-basis: 50%;
-    line-height: 70px;
+    line-height: 50px;
     font-size: 20px;
   }
 }

@@ -116,6 +116,7 @@ export default {
 <style scoped lang="less">
 .page-container {
   padding: 50px;
+  padding-top: 0;
 }
 .hover-cursor:hover {
   cursor: pointer;
