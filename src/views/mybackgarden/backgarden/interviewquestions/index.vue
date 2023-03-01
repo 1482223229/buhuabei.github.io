@@ -376,7 +376,7 @@ const selectedAnchorId = ref("anchor1");
 
 nextTick(() => {
   const scrollView = document.querySelector("#interview-questions-scroll-view");
-  const anchorEle = document.getElementsByClassName("anchorele");
+  let anchorEle = document.getElementsByClassName("anchorele");
   let timer = null;
   scrollView.addEventListener("scroll", function (ev) {
     const scrollTop = ev.target.scrollTop;
@@ -387,6 +387,9 @@ nextTick(() => {
     }
     // 只有最后一次定时器有效执行
     timer = setTimeout(function () {
+      if (!anchorEle) {
+        anchorEle = document.getElementsByClassName("anchorele");
+      }
       anchorEle.forEach((item) => {
         const selectItemOffsetTop = item.offsetTop;
         if (scrollTop - selectItemOffsetTop > -251) {
