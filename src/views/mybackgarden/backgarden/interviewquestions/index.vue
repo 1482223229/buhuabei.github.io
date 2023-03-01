@@ -390,6 +390,7 @@ nextTick(() => {
       if (!anchorEle) {
         anchorEle = document.getElementsByClassName("anchorele");
       }
+      console.log(anchorEle);
       anchorEle.forEach((item) => {
         const selectItemOffsetTop = item.offsetTop;
         if (scrollTop - selectItemOffsetTop > -251) {
