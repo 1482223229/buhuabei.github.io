@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>兜兜转卷</title>
     <style>
       @media screen and (min-width: 375px) {
@@ -184,10 +185,18 @@
       }
       .username_ipt {
         margin: 2rem 0;
+        height: 1.5rem;
+        width: 10rem;
+        font-size: 1rem;
+        outline: none;
+        border-radius: 0.2rem;
       }
       .login_submit {
-        width: 4rem;
-        line-height: 0.8rem;
+        width: 5rem;
+        border-radius: 0.2rem;
+        line-height: 1.5rem;
+        font-size: 1rem;
+        outline: none;
       }
     </style>
   </head>
@@ -215,7 +224,16 @@
         <p><span class="second">--</span></p>
       </div>
     </div>
-    <script></script>
+    <script>
+      document.addEventListener('touchstart', function (event) {
+          if (event.touches.length > 1) {
+            event.preventDefault()
+          }
+        });
+        document.addEventListener('gesturestart', function (event) {
+          event.preventDefault()
+        });
+    </script>
     <script>
       var maskDom = document.querySelector(".mask");
       var containerDom = document.querySelector(".container");
@@ -253,7 +271,7 @@
 
       // 登录
       function doLoginSubmit() {
-        var userName = document.querySelector(".username_ipt").value;
+        var userName = document.querySelector(".username_ipt").value.trim();
         if (userName) {
           localUserName = userName;
           localStorage.setItem("userName", userName);
