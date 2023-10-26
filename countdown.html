@@ -4,6 +4,17 @@
     <meta charset="utf-8" />
     <title>兜兜转卷</title>
     <style>
+      @media screen and (min-width: 375px) {
+        html {
+          font-size: 25px;
+        }
+      }
+
+      @media screen and (min-width: 750px) {
+        html {
+          font-size: 50px;
+        }
+      }
       body {
         width: 100%;
 
@@ -40,17 +51,19 @@
       .date-wrapper {
         color: wheat;
         letter-spacing: 2px;
+        font-size: 0.5rem;
       }
       .season {
-        font-size: 50px;
+        font-size: 1rem;
       }
       .second {
         color: gold;
       }
 
       .earth-wrapper {
-        width: 400px;
-        height: 400px;
+        width: 16rem;
+        height: 12rem;
+        padding-top: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -60,9 +73,9 @@
       .sun {
         position: absolute;
 
-        width: 100px;
+        width: 4rem;
 
-        height: 100px;
+        height: 4rem;
 
         background-color: #ff6a00;
 
@@ -74,9 +87,9 @@
       .earth {
         position: absolute;
 
-        width: 250px;
+        width: 10rem;
 
-        height: 250px;
+        height: 10rem;
 
         /* background-color: aqua; */
 
@@ -86,7 +99,7 @@
 
         border-color: silver transparent transparent transparent;
 
-        border-width: 0.1rem;
+        border-width: 0.02rem;
 
         animation: move 36.5s linear infinite;
       }
@@ -94,17 +107,17 @@
       .earth::before {
         content: "";
 
-        width: 25px;
+        width: 1rem;
 
-        height: 25px;
+        height: 1rem;
 
         background-color: skyblue;
 
         position: absolute;
 
-        top: 25px;
+        top: 1rem;
 
-        right: 25px;
+        right: 1rem;
 
         border-radius: 50%;
       }
@@ -112,13 +125,13 @@
       .moon {
         position: absolute;
 
-        width: 60px;
+        width: 2.4rem;
 
-        height: 60px;
+        height: 2.4rem;
 
-        top: 6px;
+        top: 0.24rem;
 
-        right: 6px;
+        right: 0.24rem;
 
         /* background-color: aqua; */
 
@@ -128,7 +141,7 @@
 
         border-color: silver transparent transparent transparent;
 
-        border-width: 0.1rem;
+        border-width: 0.02rem;
 
         animation: move 24s linear infinite;
       }
@@ -136,9 +149,9 @@
       .moon::before {
         content: "";
 
-        width: 15px;
+        width: 0.6rem;
 
-        height: 15px;
+        height: 0.6rem;
 
         background-color: wheat;
 
@@ -170,11 +183,11 @@
         color: white;
       }
       .username_ipt {
-        margin: 50px 0;
+        margin: 2rem 0;
       }
       .login_submit {
-        width: 100px;
-        line-height: 20px;
+        width: 4rem;
+        line-height: 0.8rem;
       }
     </style>
   </head>
@@ -202,6 +215,7 @@
         <p><span class="second">--</span></p>
       </div>
     </div>
+    <script></script>
     <script>
       var maskDom = document.querySelector(".mask");
       var containerDom = document.querySelector(".container");
