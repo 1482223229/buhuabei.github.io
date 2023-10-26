@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>兜兜转卷</title>
+    <style>
+      body {
+        width: 100%;
+
+        height: 100vh;
+
+        margin: 0;
+
+        padding: 0;
+
+        box-sizing: border-box;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+        background: #000;
+      }
+
+      .container {
+        width: 100%;
+
+        height: 100%;
+
+        display: flex;
+
+        overflow: hidden;
+
+        flex-direction: column;
+
+        align-items: center;
+      }
+
+      .date-wrapper {
+        color: wheat;
+        letter-spacing: 2px;
+      }
+      .season {
+        font-size: 50px;
+      }
+      .second {
+        color: gold;
+      }
+
+      .earth-wrapper {
+        width: 400px;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .sun {
+        position: absolute;
+
+        width: 100px;
+
+        height: 100px;
+
+        background-color: #ff6a00;
+
+        border-radius: 50%;
+
+        box-shadow: 0 0 2rem #ff6a00, 0 0 2rem #ff6a00;
+      }
+
+      .earth {
+        position: absolute;
+
+        width: 250px;
+
+        height: 250px;
+
+        /* background-color: aqua; */
+
+        border-radius: 50%;
+
+        border-style: solid solid none none;
+
+        border-color: silver transparent transparent transparent;
+
+        border-width: 0.1rem;
+
+        animation: move 36.5s linear infinite;
+      }
+
+      .earth::before {
+        content: "";
+
+        width: 25px;
+
+        height: 25px;
+
+        background-color: skyblue;
+
+        position: absolute;
+
+        top: 25px;
+
+        right: 25px;
+
+        border-radius: 50%;
+      }
+
+      .moon {
+        position: absolute;
+
+        width: 60px;
+
+        height: 60px;
+
+        top: 6px;
+
+        right: 6px;
+
+        /* background-color: aqua; */
+
+        border-radius: 50%;
+
+        border-style: solid solid none none;
+
+        border-color: silver transparent transparent transparent;
+
+        border-width: 0.1rem;
+
+        animation: move 24s linear infinite;
+      }
+
+      .moon::before {
+        content: "";
+
+        width: 15px;
+
+        height: 15px;
+
+        background-color: wheat;
+
+        position: absolute;
+
+        top: 0px;
+
+        right: 0px;
+
+        border-radius: 50%;
+      }
+
+      @keyframes move {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .mask {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        overflow: hidden;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .login_title {
+        color: white;
+      }
+      .username_ipt {
+        margin: 50px 0;
+      }
+      .login_submit {
+        width: 100px;
+        line-height: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="mask">
+      <p class="login_title">登录</p>
+      <input placeholder="请输入你的name" class="username_ipt" maxlength="10" />
+      <button class="login_submit" onclick="doLoginSubmit()">确定</button>
+    </div>
+    <div class="container">
+      <div class="earth-wrapper">
+        <div class="sun"></div>
+        <div class="earth">
+          <div class="moon"></div>
+        </div>
+      </div>
+      <div class="date-wrapper">
+        <p><span class="season">--</span></p>
+        <p><span class="username">--</span>你好！现在是：</p>
+        <p><span class="year">--</span>年<span class="month">--</span>月<span class="day">--</span>日</p>
+        <p><span class="title">时光不停的转，</span></p>
+        <p><span class="title">你也不停的卷！</span></p>
+        <p><span class="title">距离今日结束还有：</span></p>
+        <p><span class="second">--</span></p>
+      </div>
+    </div>
+    <script>
+      var maskDom = document.querySelector(".mask");
+      var containerDom = document.querySelector(".container");
+      var usernameDom = document.querySelector(".username");
+      var localUserName = localStorage.getItem("userName");
+      var currentDate = new Date();
+      var currentYear = currentDate.getFullYear();
+      var currentMonth = currentDate.getMonth() + 1; // 月份从0开始，所以要加1
+      var currentDay = currentDate.getDate();
+      var currentSeconds = currentDate.getTime();
+      var nextDaySeconds = new Date(`${currentYear}-${currentMonth}-${currentDay} 00:00:00.000`).getTime();
+      var currentQuarterOpts = ["春", "夏", "秋", "冬"];
+      var getSeconds = (currentSeconds - nextDaySeconds) / 1000;
+      document.querySelector(".year").innerText = currentYear;
+      document.querySelector(".month").innerText = currentMonth;
+      document.querySelector(".day").innerText = currentDay;
+      document.querySelector(".season").innerText = getCurrentQuarter();
+      var countDownDom = document.querySelector(".second");
+      var countDownTimer = 86400000 - (currentSeconds - nextDaySeconds);
+      function isLogin() {
+        if (localUserName) {
+          usernameDom.innerText = localUserName;
+          containerDom.style.width = "100%";
+          containerDom.style.height = "100%";
+          maskDom.style.height = "0px";
+          maskDom.style.width = "0px";
+        } else {
+          containerDom.style.width = "0px";
+          containerDom.style.height = "0px";
+          maskDom.style.height = "100vh";
+          maskDom.style.width = "100vw";
+        }
+      }
+      isLogin();
+
+      // 登录
+      function doLoginSubmit() {
+        var userName = document.querySelector(".username_ipt").value;
+        if (userName) {
+          localUserName = userName;
+          localStorage.setItem("userName", userName);
+          isLogin();
+        }
+      }
+      // 获取季度
+      function getCurrentQuarter() {
+        if (currentMonth >= 1 && currentMonth <= 3) {
+          return currentQuarterOpts[0];
+        } else if (currentMonth >= 4 && currentMonth <= 6) {
+          return currentQuarterOpts[1];
+        } else if (currentMonth >= 7 && currentMonth <= 9) {
+          return currentQuarterOpts[2];
+        } else {
+          return currentQuarterOpts[3];
+        }
+      }
+
+      setInterval(() => {
+        countDownTimer = countDownTimer - 1000;
+        var newDate = new Date(nextDaySeconds + countDownTimer);
+        function isAdd0(value) {
+          return value < 10 ? `0${value}` : value;
+        }
+        var countDown = `${isAdd0(newDate.getHours())}时${isAdd0(newDate.getMinutes())}分${isAdd0(
+          newDate.getSeconds()
+        )}秒`;
+        countDownDom.innerText = countDown;
+      }, 1000);
+    </script>
+  </body>
+</html>
