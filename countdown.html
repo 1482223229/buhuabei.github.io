@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>兜兜转卷</title>
     <style>
       @media screen and (min-width: 375px) {
@@ -36,10 +36,6 @@
       }
 
       .container {
-        width: 100%;
-
-        height: 100%;
-
         position: relative;
 
         display: flex;
@@ -49,7 +45,6 @@
         flex-direction: column;
 
         align-items: center;
-
       }
 
       .date-wrapper {
@@ -57,7 +52,13 @@
         letter-spacing: 2px;
         font-size: 0.5rem;
       }
-      .season {
+      .date-wrapper_term {
+        color: green;
+      }
+      .festival {
+        color: #ff6a00;
+      }
+      .season, .twelve_animals {
         font-size: 1rem;
       }
       .second {
@@ -104,7 +105,6 @@
         border-color: silver transparent transparent transparent;
 
         border-width: 0.02rem;
-
       }
       .earth_animation {
         animation: move 36.5s linear infinite;
@@ -148,7 +148,6 @@
         border-color: silver transparent transparent transparent;
 
         border-width: 0.02rem;
-
       }
 
       .moon_animation {
@@ -180,8 +179,6 @@
       }
 
       .mask {
-        width: 100vw;
-        height: 100vh;
         display: flex;
         overflow: hidden;
         align-items: center;
@@ -244,12 +241,12 @@
         position: fixed;
         top: 50%;
         left: 50%;
-        max-width: 10rem;
+        width: 12rem;
         transform: translate(-50%, -50%);
         z-index: 10;
         background: white;
         border-radius: 0.5rem;
-        
+
         text-align: center;
         font-size: 0.5rem;
         display: none;
@@ -273,25 +270,25 @@
       }
     </style>
   </head>
-
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <body>
     <div class="mask">
       <p class="login_title">登录</p>
       <input placeholder="你的name" class="username_ipt" maxlength="10" />
       <select class="userstatus_select">
         <option value="1">上狗班</option>
-        <option value="2">修狗班</option>
+        <option value="2">休狗班</option>
         <option value="0">快乐星期天</option>
         <option value="00">无忧节假日</option>
       </select>
       <button class="login_submit" onclick="doLoginSubmit()">确定</button>
     </div>
     <div class="modalwrap">
-       <div class="modalwrap_symbol">☺</div>
-       <div class="modalwrap_content"></div>
-       <div class="modalwrap_footer" onclick="showModalWrap('none')">OK</div>
+      <div class="modalwrap_symbol">☺</div>
+      <div class="modalwrap_content"></div>
+      <div class="modalwrap_footer" onclick="showModalWrap('none')">OK</div>
     </div>
-    <div class="container">
+    <div id="vue-view" class="container" >
       <div class="earth-wrapper" onclick="showModalWrap('block')">
         <div class="sun"></div>
         <div class="earth earth_animation">
@@ -299,62 +296,69 @@
         </div>
       </div>
       <div class="date-wrapper">
-        <p><span class="season">--</span></p>
+        <p><span class="twelve_animals">{{ lunarDayInfo.zodiac || "--" }}</span> | <span class="season">--</span></p>
         <p><span class="username">--</span>你好！现在是：</p>
-        <p><span class="year">--</span>年<span class="month">--</span>月<span class="day">--</span>日</p>
-        <p><span class="title">你当前的状态是：<span class="userstatus">--</span></p>
+        <p>阳历：</span><span class="year">--</span>年<span class="month">--</span>月<span class="day">--</span>日</p>
+        <p>
+          农历：<span class="year">{{lunarDayInfo.lunarYear || "--"}}</span>年
+          <span class="month">{{lunarDayInfo.lunarMonthName || "--月"}}</span>
+          <span class="day">{{lunarDayInfo.lunarDay || "--"}}</span>日
+          <span class="date-wrapper_term">{{lunarDayInfo.term ? `【${lunarDayInfo.term}】` : ""}}</span>
+        </p>
+        <p><span class="title">节日：</span><span class="festival">{{lunarDayInfo.solarFestival || '无'}}</span></p>
+        <p><span class="title">你当前的状态是：</span><span class="userstatus">--</span></p>
         <p><span class="title">时光不停的转，</span></p>
         <p><span class="title">你也不停的卷！</span></p>
         <p><span class="title">距离今日结束还有：</span></p>
-        <p><span class="second">--</span></p>
+        <p><span class="second">{{countDownTimeText || '--'}}</span></p>
       </div>
       <div class="outlogin" onclick="doOutLogin()">
-        <p>退出登录☇</p>
+        <p>退出登录 ··></p></p></p></p>
       </div>
     </div>
     <script>
-      document.addEventListener('touchstart', function (event) {
-          if (event.touches.length > 1) {
-            event.preventDefault()
-          }
-        });
-        document.addEventListener('gesturestart', function (event) {
-          event.preventDefault()
-        });
+      document.addEventListener("touchstart", function (event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      });
+      document.addEventListener("gesturestart", function (event) {
+        event.preventDefault();
+      });
     </script>
     <script>
       var toastTimerFlag = false;
       var currentQuarterOpts = ["春", "夏", "秋", "冬"];
       var userstatusOpts = {
-        "0": {
+        0: {
           title: "快乐星期天",
           list: [
             "“星期天”的来历。创世纪第二章中说,天地万物都造齐了。到第七日,神造物的工已经完毕。神赐福第七日,定为圣日,因为在这日,神歇了他一切创造的工,就安息了。",
-            "基督教中，“星期天”是耶稣复活的日子，是上帝的赏赐，感谢吾“主”..."
-          ]
+            "基督教中，“星期天”是耶稣复活的日子，是上帝的赏赐，感谢吾“主”...",
+          ],
         },
         "00": {
           title: "无忧节假日",
           list: [
             "无忧节假日。是为了让人放松压力的日子，放松方式很多。例如：刷剧、吃吃喝喝、旅游、耍朋友、研究表明躺尸也是放松的一种方式。",
-            "无忧节假日。是为了让人放松压力的日子，放松方式很多。例如：刷剧、吃吃喝喝、旅游、耍朋友、研究表明躺尸也是放松的一种方式。"
-          ]
+            "无忧节假日。是为了让人放松压力的日子，放松方式很多。例如：刷剧、吃吃喝喝、旅游、耍朋友、研究表明躺尸也是放松的一种方式。",
+          ],
         },
-        "1": {
+        1: {
           title: "上狗班",
           list: [
             "听说你在“上狗班”，别卷了，收拾一下你破烂不堪的心情，和疲惫的身体吧！",
-            "听说你在“上狗班”，我都羡慕极了，你用你的汗水，换来了一日三餐，赚的盆满钵满，加油哦，崽崽！"
-          ]
+            "听说你在“上狗班”，我都羡慕极了，你用你的汗水，换来了一日三餐，赚的盆满钵满，加油哦，崽崽！",
+          ],
         },
-        "2": {
+        2: {
           title: "休狗班",
           list: [
             "听说你在“休狗班”，不出意外的话，你休息的时间不多了，即将开启你的“上狗班时刻”，崽崽好好耍，好好休息吧！",
-            "什么？你在“休狗班”？我都羡慕极了，我还在为了一日三餐努力，加油崽崽！"
-          ]
+            "什么？你在“休狗班”？我都羡慕极了，我还在为了一日三餐努力，加油崽崽！",
+          ],
         },
-      }
+      };
       var maskDom = document.querySelector(".mask");
       var containerDom = document.querySelector(".container");
       var usernameDom = document.querySelector(".username");
@@ -365,8 +369,7 @@
       var modalwrapContentdom = document.querySelector(".modalwrap_content");
       var localUserName = localStorage.getItem("userName");
       var localUserStatus = localStorage.getItem("userStatus");
-      
-      
+
       var currentDate = new Date();
       var currentYear = currentDate.getFullYear();
       var currentMonth = currentDate.getMonth() + 1; // 月份从0开始，所以要加1
@@ -379,11 +382,10 @@
       document.querySelector(".day").innerText = currentDay;
       document.querySelector(".season").innerText = getCurrentQuarter();
       var countDownDom = document.querySelector(".second");
-      var countDownTimer = 86400000 - (currentSeconds - nextDaySeconds);
       function isLogin() {
         if (localUserName) {
           usernameDom.innerText = localUserName;
-          userstatusDom.innerText = userstatusOpts[localUserStatus + ''].title;
+          userstatusDom.innerText =  `【${userstatusOpts[localUserStatus + ""].title}】`;
           containerDom.style.width = "100%";
           containerDom.style.height = "100%";
           maskDom.style.height = "0px";
@@ -429,7 +431,7 @@
       }
       // 创建并显示toast
       function createToast(text) {
-        if(toastTimerFlag) {
+        if (toastTimerFlag) {
           return;
         }
         toastTimerFlag = true;
@@ -438,36 +440,63 @@
         toastDom.innerHTML = text;
         document.body.appendChild(toastDom);
         setTimeout(() => {
-         document.body.removeChild(toastDom);
-         toastTimerFlag = false;
-        }, 2000)
-
+          document.body.removeChild(toastDom);
+          toastTimerFlag = false;
+        }, 2000);
       }
-      
+
       // 显示/隐藏modal
       function showModalWrap(value) {
-        if(value === "none") {
+        if (value === "none") {
           moonDom.classList.add("moon_animation");
           earthDom.classList.add("earth_animation");
         } else {
-          modalwrapContentdom.innerHTML = userstatusOpts[localUserStatus + ''].list[Math.round(Math.random())];
-          moonDom.classList.remove('moon_animation');
+          modalwrapContentdom.innerHTML = userstatusOpts[localUserStatus + ""].list[Math.round(Math.random())];
+          moonDom.classList.remove("moon_animation");
           earthDom.classList.remove("earth_animation");
         }
-         modalWrapDom.style.display = value;
+        modalWrapDom.style.display = value;
       }
 
-      setInterval(() => {
-        countDownTimer = countDownTimer - 1000;
-        var newDate = new Date(nextDaySeconds + countDownTimer);
-        function isAdd0(value) {
-          return value < 10 ? `0${value}` : value;
-        }
-        var countDown = `${isAdd0(newDate.getHours())}时${isAdd0(newDate.getMinutes())}分${isAdd0(
-          newDate.getSeconds()
-        )}秒`;
-        countDownDom.innerText = countDown;
-      }, 1000);
+    </script>
+    <script src="https://unpkg.com/lunar-calendar@0.1.4/lib/LunarCalendar.js"></script>
+    <script type="module">
+      // VUE 模块
+      const { createApp } = Vue;
+      let app = createApp({
+        data() {
+          return {
+            lunarDayInfo: {},
+            countDownTimeText: ""
+          };
+        },
+        created() {
+          this.countDownTimer = 86400000 - (currentSeconds - nextDaySeconds);
+        },
+        mounted() {
+          this.getLunarDayInfo();
+          this.getCountDownTime();
+        },
+        methods: {
+          getLunarDayInfo() {
+            this.lunarDayInfo = LunarCalendar.solarToLunar(currentYear, currentMonth, currentDay);
+            console.log(this.lunarDayInfo)
+          },
+          getCountDownTime() {
+            setInterval(() => {
+              this.countDownTimer = this.countDownTimer - 1000;
+              var newDate = new Date(nextDaySeconds + this.countDownTimer);
+              function isAdd0(value) {
+                return value < 10 ? `0${value}` : value;
+              }
+              var countDown = `${isAdd0(newDate.getHours())}时${isAdd0(newDate.getMinutes())}分${isAdd0(
+                newDate.getSeconds()
+              )}秒`;
+              this.countDownTimeText = countDown;
+            }, 1000);
+          }
+        },
+      }).mount("#vue-view");
     </script>
   </body>
 </html>
