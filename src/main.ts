@@ -2,6 +2,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import * as echarts from "echarts";
+import store from "@/store/index.js";
+import { mapState } from "vuex";
 import MagnifierHb from "magnifier-hb";
 import "magnifier-hb/lib/hb.css";
 import Pagination from "ant-design-vue/lib/pagination";
@@ -55,12 +57,20 @@ app
   .use(MagnifierHb)
   .use(PaginationHb)
   .use(router)
+  .use(store)
   .component("Pagination", Pagination)
   .mount("#app");
 app.provide("echarts", echarts);
 router.beforeEach((to, from, next) => {
+  const islogin = store.state.login.islogin;
+
   if (to.meta.title) {
     document.title = to.meta.title as string;
+  }
+  if (to.path.includes("/backgarden") && !islogin && !from.path.includes("/login")) {
+    // 如果未登录跳转到登录
+    router.replace("/login");
+    return;
   }
   next();
 });

@@ -10,6 +10,7 @@ declare module "@kangc/v-md-editor/lib/theme/github.js";
 declare module '@kangc/v-md-editor/lib/preview';
 declare module 'codemirror';
 declare module "@/views/datascreen/switchFn";
+declare module "@/store/index.js";
 declare module "*.json";
 declare module 'magnifier-hb';
 declare module 'pagination-hb';

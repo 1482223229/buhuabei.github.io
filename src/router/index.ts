@@ -110,6 +110,13 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/login",
+    component: () => import("@/views/login/index.vue"),
+    meta: {
+      title: "登录",
+    },
+  },
+  {
     path: "/:pathMatch(.*)*",
     component: () => import("@/views/notfontpage/index.vue"),
   },
