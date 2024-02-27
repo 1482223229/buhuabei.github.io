@@ -14,3 +14,4 @@ declare module "*.json";
 declare module 'magnifier-hb';
 declare module 'pagination-hb';
 declare module "@/views/entertainmentmedia/jsondata.js";
+declare module "swiper/dist/js/swiper.min.js";

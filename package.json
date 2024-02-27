@@ -22,11 +22,13 @@
     "sass-resources-loader": "^2.2.4",
     "simple-syntax-highlighter": "^2.0.6",
     "style-resources-loader": "^1.4.1",
+    "swiper": "^3.4.2",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-cli-plugin-style-resources-loader": "^0.1.5",
     "vue-property-decorator": "^9.1.2",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",

@@ -32,7 +32,7 @@
         justify-content: center;
 
         align-items: center;
-        background: #000;
+        background:  linear-gradient(to bottom, #3b1e52, #000);
       }
 
       .container {
@@ -213,6 +213,8 @@
         font-size: 1rem;
         outline: none;
         border: none;
+        background: linear-gradient(to bottom, #3b1e52, #fff);
+        color: #6c37a7;
       }
       .outlogin {
         color: skyblue;
@@ -274,7 +276,7 @@
   <body>
     <div class="mask">
       <p class="login_title">登录</p>
-      <input placeholder="你的name" class="username_ipt" maxlength="10" />
+      <input placeholder="你的昵称" class="username_ipt" maxlength="10" />
       <select class="userstatus_select">
         <option value="1">上狗班</option>
         <option value="2">休狗班</option>
@@ -383,6 +385,7 @@
       document.querySelector(".season").innerText = getCurrentQuarter();
       var countDownDom = document.querySelector(".second");
       function isLogin() {
+
         if (localUserName) {
           usernameDom.innerText = localUserName;
           userstatusDom.innerText =  `【${userstatusOpts[localUserStatus + ""].title}】`;
@@ -408,7 +411,9 @@
           localUserStatus = userStatus;
           localStorage.setItem("userName", userName);
           localStorage.setItem("userStatus", userStatus);
-          isLogin();
+          window.location.reload();
+        } else {
+           alert("请输入你的昵称！");
         }
       }
       // 退出登录

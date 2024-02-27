@@ -1,6 +1,10 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/mybackgarden/Home.vue";
 import Root from "../views/mybackgarden/Root.vue";
+import EntertainmentMedia from "@/views/entertainmentmedia/index.vue";
+import EntertainmentMediaNormalmode from "@/views/entertainmentmedia/normalMode/index.vue";
+import EntertainmentMediaCombinationmode from "@/views/entertainmentmedia/combinationMode/index.vue";
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -86,6 +90,28 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "数据大屏",
     },
+  },
+  {
+    path: "/entertainment-media",
+    component: EntertainmentMedia,
+    children: [
+      {
+        path: "",
+        component: EntertainmentMediaNormalmode,
+      },
+      {
+        path: "normal-mode",
+        component: EntertainmentMediaNormalmode,
+      },
+      {
+        path: "combination-mode",
+        component: EntertainmentMediaCombinationmode,
+      },
+    ],
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: () => import("@/views/notfontpage/index.vue"),
   },
 ];
 

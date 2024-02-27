@@ -24,8 +24,7 @@
       </div>
       <marquee direction="left" width="100%" :scrollamount="2">
         <div style="color: red; line-height: 30px">
-          谢谢你们那么优秀还喜欢我🌹🌹🌹&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          谢谢你们那么优秀还喜欢我🌹🌹🌹
+          谢谢你们那么优秀还喜欢我🌹🌹🌹&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 谢谢你们那么优秀还喜欢我🌹🌹🌹
         </div>
       </marquee>
       <div ref="rightMarquee">
@@ -38,12 +37,7 @@
           :scrollamount="3"
         >
           <div class="marquee-child-view">
-            <Card
-              hoverable
-              style="width: 500px"
-              v-for="(item, k) in dataList"
-              :key="k"
-            >
+            <Card hoverable style="width: 500px" v-for="(item, k) in dataList" :key="k">
               <CardMate :title="item.name" :description="item.douyinNumber">
                 <template #avatar>
                   <Avatar :src="require('@/assets/douyin_logo.jpeg')" />
