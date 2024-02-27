@@ -19,6 +19,7 @@ jobs:
           node-version: 20.x
       - name: npm config   # 配置镜像
         run: |
+          npm config set strict-ssl false
           npm config set registry https://registry.npmmirror.com
 
       - name: Install and Build   # 安装依赖、打包，如果提前已打包好无需这一步
