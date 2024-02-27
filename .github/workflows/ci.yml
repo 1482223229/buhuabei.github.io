@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           # this will use the latest Node 12 version
-          node-version: 20.x
+          node-version: 16.x
       - name: npm config   # 配置镜像
         run: |
           npm config set strict-ssl false
