@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <title>心动</title>
 </head>
 
@@ -46,7 +46,7 @@
           position: fixed;
           right: 50px;
           bottom: 50px;
-          zoom: 0.4;
+          zoom: 0.8;
           outline: none;
           border: none;
         }
@@ -61,14 +61,16 @@
         }
 
         .container {
-            width: 1000px;
+            zoom: 0.5;
+            width: 800px;
             height: 300px;
             z-index: 1;
             display: flex;
+            margin: 0 auto;
             justify-content: center;
             align-items: center;
             perspective: 1000px;
-            padding-top: 50px;
+            padding-top: 200px;
         }
 
         .box {
@@ -300,19 +302,34 @@
     <script>
         var music = document.getElementById("music");
         var mask = document.getElementById("mask");
-
+        var contain = document.getElementsByClassName("container")[0];
         var seeDate = new Date("2024/01/16 00:00:00").getTime();
 
         music.style.opacity = "0.8";
         function openmusic() {
            mask.style.display = "none";
-            setTimeout(() => {
-                   music.play();
-            }, 3000)
+           if(navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger") {
+                  // 微信浏览器
+                  WeixinJSBridge.invoke('getNetworkType', {}, ()=> {
+                        music.play();
+                  });
+           } else {
+                  setTimeout(() => {
+                        music.play();
+                  }, 3000);
+           }
         }
         setInterval(() => {
           var nowDate = new Date().getTime();
           getDiffTime( nowDate,seeDate);
         }, 1000)
+
+        var boxdom = document.getElementsByClassName("box")[0];
+        contain.addEventListener("touchstart", function() {
+            boxdom.style.animation = "200s run linear infinite paused;"
+        })
+        contain.addEventListener("touchend", function() {
+            boxdom.style.animation = "200s run linear infinite normal;"
+        })
     </script>
 </html>
