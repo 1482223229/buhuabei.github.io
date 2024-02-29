@@ -26,7 +26,7 @@
           <InputPassword v-model:value="formState.password" />
         </FormItem>
         <FormItem :wrapper-col="{ offset: 8, span: 16 }">
-          <Button type="primary" html-type="submit">登录</Button>
+          <Button type="primary" html-type="submit" :loading="loadding">登录</Button>
         </FormItem>
       </Form>
     </div>
@@ -34,22 +34,32 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { Form, Input, Button } from "ant-design-vue";
 import { useActions } from "@/utils/useactions";
+import { loginRequest } from "@/services/login";
 const FormItem = Form.Item;
 const InputPassword = Input.Password;
+let loadding = ref(false);
 let formState = reactive({
   username: "admin",
   password: "123456",
 });
-const actions = {
+const actions: any = {
   ...useActions("login", [
     "setIslogin", // -> this.actions.setIslogin
   ]),
 };
-const onFinish = (values: any) => {
-  actions.setIslogin(true);
+const onFinish = async (values: any) => {
+  loadding.value = true;
+  try {
+    const res: any = await loginRequest(values);
+    if (res?.success) {
+      actions.setIslogin(true);
+    }
+  } catch {
+    loadding.value = false;
+  }
 };
 
 const onFinishFailed = (errorInfo: any) => {

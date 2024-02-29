@@ -24,7 +24,7 @@ module.exports = {
       return {
         plugins: [
           new CompressionWebpackPlugin({
-            test: /\.(js|css)(\?.*)?$/i,
+            test: /\.(js|ts|css)(\?.*)?$/i,
           }),
         ],
       };

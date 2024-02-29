@@ -12,7 +12,7 @@
       </nav>
 
       <div class="router-view">
-        <!-- <PageHeader v-if="route.path && !route.path.includes('/home')" :title="pageTitle" @back="onBack" /> -->
+        <PageHeader v-if="route.path && !route.path.includes('/home')" :title="pageTitle" @back="onBack" />
         <router-view />
       </div>
     </div>
@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { reactive, toRefs, watch } from "vue";
-// import { PageHeader } from "ant-design-vue";
+import { PageHeader } from "ant-design-vue";
 import { useRoute, useRouter } from "vue-router";
 import EmpireCode from "@/components/EmpireCode.vue";
 
@@ -32,7 +32,7 @@ interface IState {
 }
 export default {
   components: {
-    // PageHeader,
+    PageHeader,
     EmpireCode,
   },
   setup() {

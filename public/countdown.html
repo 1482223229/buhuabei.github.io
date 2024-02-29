@@ -13,24 +13,19 @@
 
       @media screen and (min-width: 750px) {
         html {
-          font-size: 50px;
+          font-size: 30px;
         }
       }
       body {
         width: 100%;
-
         height: 100vh;
-
-        margin: 0;
-
+        max-width: 800px;
+        margin: 0 auto;
         padding: 0;
-
         box-sizing: border-box;
-
         display: flex;
-
+        flex-direction: column;
         justify-content: center;
-
         align-items: center;
         background:  linear-gradient(to bottom, #3b1e52, #000);
       }
@@ -73,6 +68,7 @@
         align-items: center;
         justify-content: center;
         position: relative;
+        zoom: 0.8;
       }
 
       .sun {
@@ -179,6 +175,7 @@
       }
 
       .mask {
+        width: 100%!important;
         display: flex;
         overflow: hidden;
         align-items: center;
@@ -384,11 +381,25 @@
       document.querySelector(".day").innerText = currentDay;
       document.querySelector(".season").innerText = getCurrentQuarter();
       var countDownDom = document.querySelector(".second");
-      function isLogin() {
+      var domData = {
+         username: "--",
+         userstatus: "--"
+      }
+      var handleDomData = {
+         set(target, key, value) {
+            target[key] = value;
+            document.querySelector(`.${key}`).innerText = value;
+            return true;
+         }
+      }
+      var domDataProxy = new Proxy(domData, handleDomData);
 
+      function isLogin() {
         if (localUserName) {
-          usernameDom.innerText = localUserName;
-          userstatusDom.innerText =  `【${userstatusOpts[localUserStatus + ""].title}】`;
+          // usernameDom.innerText = localUserName;
+          // userstatusDom.innerText =  `【${userstatusOpts[localUserStatus + ""].title}】`;
+          domDataProxy.username = localUserName;
+          domDataProxy.userstatus = `【${userstatusOpts[localUserStatus + ""].title}】`;
           containerDom.style.width = "100%";
           containerDom.style.height = "100%";
           maskDom.style.height = "0px";
@@ -411,7 +422,8 @@
           localUserStatus = userStatus;
           localStorage.setItem("userName", userName);
           localStorage.setItem("userStatus", userStatus);
-          window.location.reload();
+          isLogin();
+          // window.location.reload();
         } else {
            alert("请输入你的昵称！");
         }
