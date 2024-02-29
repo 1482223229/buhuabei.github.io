@@ -209,34 +209,34 @@
             <div class="container">
                   <div class="box">
                   <div class="circle circle1">
-                        <img src="photowall/1.jpg" alt="1.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="1.jpg" title="">
                   </div>
                   <div class="circle circle2">
-                        <img src="photowall/2.jpg" alt="2.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="2.jpg" title="">
                   </div>
                   <div class="circle circle3">
-                        <img src="photowall/3.jpg" alt="3.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="3.jpg" title="">
                   </div>
                   <div class="circle circle4">
-                        <img src="photowall/4.jpg" alt="2.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="2.jpg" title="">
                   </div>
                   <div class="circle circle5">
-                        <img src="photowall/5.jpg" alt="2.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="2.jpg" title="">
                   </div>
                   <div class="circle circle6">
-                        <img src="photowall/6.jpg" alt="2.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="2.jpg" title="">
                   </div>
                   <div class="circle circle7">
-                        <img src="photowall/7.jpg" alt="2.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="2.jpg" title="">
                   </div>
                   <div class="circle circle8">
-                        <img src="photowall/8.jpg" alt="2.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="2.jpg" title="">
                   </div>
                   <div class="circle circle9">
-                        <img src="photowall/9.jpg" alt="2.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="2.jpg" title="">
                   </div>
                   <div class="circle circle10">
-                        <img src="photowall/10.jpg" alt="2.jpg" title="">
+                        <img src="photowall/zips/1.jpg" class="wallimg" alt="2.jpg" title="">
                   </div>
                   </div>
 
@@ -250,6 +250,33 @@
         <div id="mask"><button onclick="openmusic()">播放音频</button></div>
         <audio  id="music" src="http://music.163.com/song/media/outer/url?id=1969013657.mp3"   autoplay controls loop="loop" ></audio>
       </body>
+    <script>
+      // 预加载图片
+      var wallImgs = document.getElementsByClassName("wallimg");
+      var imgs = [
+          "photowall/zips/1.jpg",
+          "photowall/zips/2.jpg",
+          "photowall/zips/3.jpg",
+          "photowall/zips/4.jpg",
+          "photowall/zips/5.jpg",
+          "photowall/zips/6.jpg",
+          "photowall/zips/7.jpg",
+          "photowall/zips/8.jpg",
+          "photowall/zips/9.jpg",
+          "photowall/zips/10.jpg"
+      ]
+      imgs.forEach((ele) => {
+          var img = new Image();
+          img.src = ele;
+          img.onload = function(e) {
+             imgs.forEach((_,index) => {
+               if(e.target.src.includes(index + 1+".jpg")) {
+                   wallImgs[index].src = imgs[index]
+               }
+             })
+          }
+      })
+    </script>
     <script>
             var timeDom = document.getElementById("time");
             var secondDom = document.getElementById("second");
